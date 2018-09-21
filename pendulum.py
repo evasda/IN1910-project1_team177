@@ -96,45 +96,45 @@ class DampenedPendulum(Pendulum):
 
 
 
+if __name__ == "__main__":
+	y0 = [np.pi/4., 0.1]
+	T = 10
+	dt = 0.1
 
-y0 = [np.pi/4., 0.1]
-T = 10
-dt = 0.1
+	pen = Pendulum(g=9.81, L=2.2, M=1.)
+	pen.solve(y0, T , dt, angles = "rad")
+	#t1, y1 = pen.solve([0.0, 0.0], T, dt, angles = "deg")
 
-pen = Pendulum(g=9.81, L=2.2, M=1.)
-pen.solve(y0, T , dt, angles = "rad")
-#t1, y1 = pen.solve([0.0, 0.0], T, dt, angles = "deg")
+	#2f)
+	pen2f = Pendulum(g=3.711, L=2.2, M=1.)
+	pen2f.solve(y0, T, dt, angles = "rad")
+	plt.plot(pen.t, pen.theta)
+	plt.show()
+	plt.plot(pen2f.t, pen2f.theta)
+	plt.show()
+	plt.plot(pen.t, pen.kinetic)
+	plt.plot(pen.t, pen.p)
+	plt.plot(pen.t, pen.kinetic+pen.p)
+	plt.show()
+	plt.plot(pen2f.t, pen2f.kinetic)
+	plt.plot(pen2f.t, pen2f.p)
+	plt.plot(pen2f.t, pen2f.kinetic+pen2f.p)
+	plt.show()
 
-#2f)
-pen2f = Pendulum(g=3.711, L=2.2, M=1.)
-pen2f.solve(y0, T, dt, angles = "rad")
-plt.plot(pen.t, pen.theta)
-plt.show()
-plt.plot(pen2f.t, pen2f.theta)
-plt.show()
-plt.plot(pen.t, pen.kinetic)
-plt.plot(pen.t, pen.p)
-plt.plot(pen.t, pen.kinetic+pen.p)
-plt.show()
-plt.plot(pen2f.t, pen2f.kinetic)
-plt.plot(pen2f.t, pen2f.p)
-plt.plot(pen2f.t, pen2f.kinetic+pen2f.p)
-plt.show()
+	#2e
+	pen2e = DampenedPendulum(g=9.81, L=2.2, M=1., B=2.)
+	pen2e.solve(y0, T , dt, angles = "rad")
+	plt.plot(pen2e.t, pen2e.kinetic+pen2e.p)
+	plt.show()
 
-#2e
-pen2e = DampenedPendulum(g=9.81, L=2.2, M=1., B=2.)
-pen2e.solve(y0, T , dt, angles = "rad")
-plt.plot(pen2e.t, pen2e.kinetic+pen2e.p)
-plt.show()
-
-#print(pen.t)
-#print(pen.theta)
-#print(pen.omega)
-#print(pen.y)
-#print(pen.x)
-print(pen.p)
-print(pen.vx)
-print(pen.kinetic)
-#print(t1, y1)
+	#print(pen.t)
+	#print(pen.theta)
+	#print(pen.omega)
+	#print(pen.y)
+	#print(pen.x)
+	print(pen.p)
+	print(pen.vx)
+	print(pen.kinetic)
+	#print(t1, y1)
 
 

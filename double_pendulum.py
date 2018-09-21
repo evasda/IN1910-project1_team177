@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-
 class DoublePendulum:
     def __init__(self, g = 9.81 , L1 = 1., L2=1., M1=1., M2 = 1.):
         self.g = g
@@ -64,6 +63,9 @@ class DoublePendulum:
 
     def show_animation(self):
         plt.show()
+
+    def save_animation(self, filename):
+        self.animation.save(filename, fps=60, writer = "mencoder")
 
     @property
     def t(self):
@@ -134,7 +136,7 @@ class DoublePendulum:
 # Test runs:
 
 y0 = [np.pi, 0.1, np.pi/2., 0.1]
-T = 10
+T = 10.
 dt = 0.01
 
 pen = DoublePendulum()
@@ -146,3 +148,13 @@ plt.show()
 
 pen.create_animation()
 pen.show_animation()
+pen.save_animation("animation_double_pendulum.mp4")
+
+#exercice 4d)
+
+T1 = 10
+dt1 = 1./60
+
+#anim.solve(y0, T1, dt1, angles = "rad")
+#anim.create_animation()
+#anim.save_animation("animation_double_pendulum.mp4")
