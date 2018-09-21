@@ -29,28 +29,38 @@ class Pendulum:
 
 	@property
 	def t(self):
-		print("Setting t values")
 		return self._t
+		try:
+			return self.t
+		except AttributeError:
+			print("Must use method solve first.")
+			raise
 
 	@property
 	def theta(self):
-		print("Getting theta values")
 		return self._theta
+		try:
+			return self.theta
+		except AttributeError:
+			print("Must use method solve first.")
+			raise
 
 	@property 
 	def omega(self):
-		print("Getting omega values")
 		return self._omega
+		try:
+			return self.omega
+		except AttributeError:
+			print("Must use method solve first.")
+			raise
 
 	@property 
 	def x(self):
-		print("x coordinates")
 		self._x = self.L * np.sin(self._theta)
 		return self._x
 
 	@property
 	def y(self):
-		print("y coordinates")
 		self._y = -self.L * np.cos(self._theta)
 		return self._y
 
@@ -103,7 +113,6 @@ if __name__ == "__main__":
 
 	pen = Pendulum(g=9.81, L=2.2, M=1.)
 	pen.solve(y0, T , dt, angles = "rad")
-	#t1, y1 = pen.solve([0.0, 0.0], T, dt, angles = "deg")
 
 	#2f)
 	pen2f = Pendulum(g=3.711, L=2.2, M=1.)
@@ -127,14 +136,9 @@ if __name__ == "__main__":
 	plt.plot(pen2e.t, pen2e.kinetic+pen2e.p)
 	plt.show()
 
-	#print(pen.t)
-	#print(pen.theta)
-	#print(pen.omega)
-	#print(pen.y)
-	#print(pen.x)
 	print(pen.p)
 	print(pen.vx)
 	print(pen.kinetic)
-	#print(t1, y1)
+
 
 
