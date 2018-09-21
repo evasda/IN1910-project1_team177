@@ -2,6 +2,7 @@ from exp_decay import ExponentialDecay
 import nose.tools as nt
 
 def test_call():
+	"""Test that the call method returns correct derivative for known function."""
     a = 0.4
     ut = 3.2
     ED = ExponentialDecay(a)

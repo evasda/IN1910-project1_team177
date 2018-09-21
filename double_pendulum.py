@@ -6,6 +6,7 @@ import matplotlib.animation as animation
 
 class DoublePendulum:
     def __init__(self, g = 9.81 , L1 = 1., L2=1., M1=1., M2 = 1.):
+        """g is gravity, L1 and L2 is length of pendulums, M1 and M2 is mass of pendulums. """
         self.g = g
         self.L1 = L1
         self.L2 = L2
@@ -13,6 +14,7 @@ class DoublePendulum:
         self.M2 = M2
 
     def __call__(self, t, y):
+        """ Returns derivatives as array of theta1, theta2 and omega1, omega2 values."""
         g = self.g
         L1 = self.L1
         L2 = self.L2
@@ -25,7 +27,11 @@ class DoublePendulum:
         return [deriv_theta1, deriv_omega1, deriv_theta2, deriv_omega2]
 
     def solve(self, y0, T, dt, angles):
-        """Method takes in the derivative, initial value, end of interval and size of increment. The last arguments specifies if the angle is given in degrees or radians."""
+        """
+        Method takes in the initial value, end of interval and size of increment. 
+        The last arguments specifies if the angle is given in degrees or radians.
+        Returns theta1, omega1, theta2, omega2 and t as arrays.
+        """
         if angles == "deg":
             y0[0] = y0[0]* np.pi/180.
             y0[1] = y0[1]*np.pi/180.
@@ -37,6 +43,7 @@ class DoublePendulum:
         self.dt = dt
 
     def create_animation(self):
+        """Plots animation."""
         # Create empty figure
         fig = plt.figure()
         
@@ -57,18 +64,22 @@ class DoublePendulum:
                                                  blit=True)
 
     def _next_frame(self, i):
+    """Returns coordinates. """
         self.pendulums.set_data((0, self.x1[i], self.x2[i]),
                                 (0, self.y1[i], self.y2[i]))
         return self.pendulums,
 
     def show_animation(self):
+    """Shows animation """
         plt.show()
 
     def save_animation(self, filename):
+    """ Saves animation in given filename. """
         self.animation.save(filename, fps=60, writer = "mencoder")
 
     @property
     def t(self):
+        """ Returns array of t's."""
         try:
             return self._t
         except AttributeError:
@@ -77,6 +88,7 @@ class DoublePendulum:
 
     @property
     def theta1(self):
+        """ Returns array of theta1s."""
         try:
             return self._theta1
         except AttributeError:
@@ -85,6 +97,7 @@ class DoublePendulum:
 
     @property
     def theta2(self):
+        """ Returns array of theta2's."""
         try:
             return self._theta2
         except AttributeError:
@@ -93,26 +106,31 @@ class DoublePendulum:
 
     @property 
     def x1(self):
+        """ Returns array of x1's."""
         self._x1 = self.L1 * np.sin(self._theta1)
         return self._x1
 
     @property
     def y1(self):
+        """ Returns array of y1's."""
         self._y1 = -self.L1 * np.cos(self._theta1)
         return self._y1
 
     @property 
     def x2(self):
+        """ Returns array of x2's."""
         self._x2 = self._x1 + self.L2 * np.sin(self._theta2)
         return self._x2
 
     @property
     def y2(self):
+        """ Returns array of y2's."""
         self._y2 = self.y1 -self.L2 * np.cos(self._theta2)
         return self._y2
 
     @property
     def potential(self):
+        """ Returns potential energy as array."""
         p1 = self.M1*self.g*(self.y1+self.L1)
         p2 = self.M2*self.g*(self.y2+self.L1 + self.L2)
         self._p = p1 + p2
@@ -120,26 +138,31 @@ class DoublePendulum:
 
     @property 
     def vx1(self):
+        """ Returns velocity vx1 as an array."""
         self._vx1 = np.gradient(self.x1, self.t)
         return self._vx1
 
     @property 
     def vy1(self):
+        """ Returns velocity vy1 as an array."""
         self._vy1 = np.gradient(self.y1, self.t)
         return self._vy1
 
     @property 
     def vx2(self):
+        """ Returns velocity vx2 as an array."""
         self._vx2 = np.gradient(self.x2, self.t)
         return self._vx2
 
     @property 
     def vy2(self):
+        """ Returns velocity vy2 as an array."""
         self._vy2 = np.gradient(self.y2, self.t)
         return self._vy2
 
     @property 
     def kinetic(self):
+        """ Returns kinetic energy as an array."""
         K1 = 1./2 * self.M1 * (np.square(self.vx1) + np.square(self.vy1))
         K2 = 1./2 * self.M2 * (np.square(self.vx2) + np.square(self.vy2))
         self._K = K1 + K2
@@ -162,12 +185,3 @@ if __name__ == "__main__":
     pen.create_animation()
     pen.show_animation()
     pen.save_animation("animation_double_pendulum.mp4")
-
-    #exercice 4d)
-
-    T1 = 10
-    dt1 = 1./60
-
-    #anim.solve(y0, T1, dt1, angles = "rad")
-    #anim.create_animation()
-    #anim.save_animation("animation_double_pendulum.mp4")

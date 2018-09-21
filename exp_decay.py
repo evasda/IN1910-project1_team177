@@ -8,13 +8,14 @@ class ExponentialDecay:
 		self.a = a
 
 	def __call__(self, t, u):
+		"""Returns the derivative of u."""
 		a = self.a
 		derivative = -a*u
 		derivative = np.round(derivative, 7)
 		return derivative
 
 	def solve(self, u0, T, dt):
-		"""Method takes in the derivative, initial value, end of interval and size of increment."""
+		"""Method takes in the derivative, initial value, end of interval and size of increment. Returns t values and y values as arrays."""
 		sol = solve_ivp(self.__call__, [0,T], u0, t_eval = list(np.linspace(0, T, T/dt)))
 		return sol.t, sol.y[0]
 

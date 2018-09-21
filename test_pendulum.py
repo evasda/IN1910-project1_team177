@@ -3,6 +3,7 @@ import numpy as np
 import nose.tools as nt
 
 def test_call():
+	"""Test that call method returns correct theta and omega."""
 	T = 10
 	dt = 0.1
 	pen = Pendulum(g=9.81, L=2.2, M=1.)
@@ -15,6 +16,7 @@ def test_call():
 
 
 def test_solve():
+	"Test solve_method."
 	T = 10
 	dt = 0.1
 	pen = Pendulum(g=9.81, L=2.2, M=1.)
@@ -28,20 +30,24 @@ def test_solve():
 
 @nt.raises(AttributeError)
 def test_t():
+	"""Test that AttributeError is raised."""
 	pen = Pendulum()
 	pen.t
 
 @nt.raises(AttributeError)
 def test_theta():
+	"""Test that AttributeError is raised."""
 	pen = Pendulum()
 	pen.theta
 
 @nt.raises(AttributeError)
 def test_omega():
+	"""Test that AttributeError is raised."""
 	pen = Pendulum()
 	pen.omega
 
 def test_radius():
+	"""Test that length of pendulum is consistent."""
 	y0 = [np.pi/4., 0.1]
 	T = 10
 	dt = 0.1
