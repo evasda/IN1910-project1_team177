@@ -24,7 +24,7 @@ class Pendulum:
 			y0[0] = y0[0]* np.pi/180.
 			y0[1] = y0[1]*np.pi/180.
 		sol = solve_ivp(self.__call__, [0,T], y0, t_eval = list(np.linspace(0, T, T/dt)))
-		self._omega = sol.y[0]; self._theta = sol.y[1]
+		self._omega = sol.y[1]; self._theta = sol.y[0]
 		self._t = sol.t
 
 	@property
@@ -55,9 +55,44 @@ class Pendulum:
 		return self._y
 
 
-#	@property
-#	def p(self)
-#	return  
+	@property
+	def p(self):
+		self._p = self.M*self.g*(self.y+self.L)
+		return self._p
+
+	@property 
+	def vx(self):
+		self._vx = np.gradient(self.x, self.t)
+		return self._vx
+
+	@property 
+	def vy(self):
+		self._vy = np.gradient(self.y, self.t)
+		return self._vy
+
+	@property 
+	def kinetic(self):
+		self._K = 1./2 * self.M * (np.square(self.vx) + np.square(self.vy))
+		return self._K
+
+
+class DampenedPendulum(Pendulum):
+	def __init__(self, g = 9.81 , L = 1., M = 1., B=1.):
+		self.g = g
+		self.L = L
+		self.M = M
+		self.B = B
+
+	def __call__(self, t, y):
+		g = self.g
+		L = self.L
+		B = self.B
+		M = self.M
+		deriv_omega = -(g/L)*np.sin(y[0]) - (B/M)*y[1]
+		deriv_theta = y[1]
+		return [deriv_theta, deriv_omega]
+
+
 
 
 
@@ -70,11 +105,36 @@ pen = Pendulum(g=9.81, L=2.2, M=1.)
 pen.solve(y0, T , dt, angles = "rad")
 #t1, y1 = pen.solve([0.0, 0.0], T, dt, angles = "deg")
 
-print(pen.t)
-print(pen.theta)
-print(pen.omega)
-print(pen.y)
-print(pen.x)
+#2f)
+pen2f = Pendulum(g=3.711, L=2.2, M=1.)
+pen2f.solve(y0, T, dt, angles = "rad")
+plt.plot(pen.t, pen.theta)
+plt.show()
+plt.plot(pen2f.t, pen2f.theta)
+plt.show()
+plt.plot(pen.t, pen.kinetic)
+plt.plot(pen.t, pen.p)
+plt.plot(pen.t, pen.kinetic+pen.p)
+plt.show()
+plt.plot(pen2f.t, pen2f.kinetic)
+plt.plot(pen2f.t, pen2f.p)
+plt.plot(pen2f.t, pen2f.kinetic+pen2f.p)
+plt.show()
 
+#2e
+pen2e = DampenedPendulum(g=9.81, L=2.2, M=1., B=2.)
+pen2e.solve(y0, T , dt, angles = "rad")
+plt.plot(pen2e.t, pen2e.kinetic+pen2e.p)
+plt.show()
+
+#print(pen.t)
+#print(pen.theta)
+#print(pen.omega)
+#print(pen.y)
+#print(pen.x)
+print(pen.p)
+print(pen.vx)
+print(pen.kinetic)
 #print(t1, y1)
+
 
