@@ -69,15 +69,27 @@ class DoublePendulum:
 
     @property
     def t(self):
-        return self._t
+        try:
+            return self._t
+        except AttributeError:
+            print("Must use method solve first.")
+            raise 
 
     @property
     def theta1(self):
-        return self._theta1
+        try:
+            return self._theta1
+        except AttributeError:
+            print("Must use method solve first.")
+            raise
 
     @property
     def theta2(self):
-        return self._theta2
+        try:
+            return self._theta2
+        except AttributeError:
+            print("Must use method solve first.")
+            raise
 
     @property 
     def x1(self):
@@ -133,28 +145,29 @@ class DoublePendulum:
         self._K = K1 + K2
         return self._K
 
-# Test runs:
+if __name__ == "__main__":
+    # Test runs:
 
-y0 = [np.pi, 0.1, np.pi/2., 0.1]
-T = 10.
-dt = 0.01
+    y0 = [np.pi, 0.1, np.pi/2., 0.1]
+    T = 10.
+    dt = 0.01
 
-pen = DoublePendulum()
-pen.solve(y0, T , dt, angles = "rad")
-plt.plot(pen.t, pen.kinetic)
-plt.plot(pen.t, pen.potential)
-plt.plot(pen.t, pen.kinetic+pen.potential)
-plt.show()
+    pen = DoublePendulum()
+    pen.solve(y0, T , dt, angles = "rad")
+    plt.plot(pen.t, pen.kinetic)
+    plt.plot(pen.t, pen.potential)
+    plt.plot(pen.t, pen.kinetic+pen.potential)
+    plt.show()
 
-pen.create_animation()
-pen.show_animation()
-pen.save_animation("animation_double_pendulum.mp4")
+    pen.create_animation()
+    pen.show_animation()
+    pen.save_animation("animation_double_pendulum.mp4")
 
-#exercice 4d)
+    #exercice 4d)
 
-T1 = 10
-dt1 = 1./60
+    T1 = 10
+    dt1 = 1./60
 
-#anim.solve(y0, T1, dt1, angles = "rad")
-#anim.create_animation()
-#anim.save_animation("animation_double_pendulum.mp4")
+    #anim.solve(y0, T1, dt1, angles = "rad")
+    #anim.create_animation()
+    #anim.save_animation("animation_double_pendulum.mp4")

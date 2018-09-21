@@ -29,27 +29,24 @@ class Pendulum:
 
 	@property
 	def t(self):
-		return self._t
 		try:
-			return self.t
+			return self._t
 		except AttributeError:
 			print("Must use method solve first.")
 			raise
 
 	@property
 	def theta(self):
-		return self._theta
 		try:
-			return self.theta
+			return self._theta
 		except AttributeError:
 			print("Must use method solve first.")
 			raise
 
 	@property 
 	def omega(self):
-		return self._omega
 		try:
-			return self.omega
+			return self._omega
 		except AttributeError:
 			print("Must use method solve first.")
 			raise
