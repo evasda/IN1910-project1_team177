@@ -20,13 +20,13 @@ class ExponentialDecay:
 		return sol.t, sol.y[0]
 
 if __name__ == "__main__":
-	"""Example for a given set of values, and the resulting plot"""
-	a=0.8
-	u0 = [10]
-	T = 10
-	dt = 0.1
-	decay_model = ExponentialDecay(a)
-	t, u = decay_model.solve(u0, T, dt)
-	plt.plot(t, u)
-	plt.show()
+    """Example for a given set of values, and the resulting plot"""
+    a=0.8
+    u0 = [10]
+    T = 10
+    dt = 0.1
+    decay_model = ExponentialDecay(a)
+    t, u = decay_model.solve(u0, T, dt)
+    plt.plot(t, u)
+    plt.show()
 

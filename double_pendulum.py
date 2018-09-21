@@ -64,17 +64,17 @@ class DoublePendulum:
                                                  blit=True)
 
     def _next_frame(self, i):
-    """Returns coordinates. """
+        """Returns coordinates. """
         self.pendulums.set_data((0, self.x1[i], self.x2[i]),
                                 (0, self.y1[i], self.y2[i]))
         return self.pendulums,
 
     def show_animation(self):
-    """Shows animation """
+        """Shows animation """
         plt.show()
 
     def save_animation(self, filename):
-    """ Saves animation in given filename. """
+        """ Saves animation in given filename. """
         self.animation.save(filename, fps=60, writer = "mencoder")
 
     @property
